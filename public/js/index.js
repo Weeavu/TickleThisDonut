@@ -42,7 +42,7 @@ function playVid() {
 }
 
 function flipVid() {
-	video.style.cssText = "-moz-transform: scale(-1, 1); -webkit-transform: scale(-1, 1); -o-transform: scale(-1, 1); transform: scale(-1, 1); filter: FlipH;";
+	video.classList.toggle('mirrored');
 }
 
 function changeSpeed(rate){
@@ -52,11 +52,6 @@ function changeSpeed(rate){
 	} else {
 	    speedSpan.innerHTML = video.playbackRate.toPrecision(2);
 	}
-}
-
-function decSpeed(rate){
-	video.playbackRate -= rate;
-	
 }
 
 function volChange(){
@@ -83,10 +78,38 @@ function changeWidth() {
 	video.width = parseInt(width.value);
 }
 
-window.addEventListener('keypress', function(e) {
-	if(e.keyCode === 32){
-	    document.getElementById("vol").focus();
-	    document.getElementById("vol").blur();
-		playVid();
-	} 
+function changeTime(rate){
+	video.currentTime += rate;
+}
+
+window.addEventListener('keydown', function(e) {
+	switch (e.keyCode) {
+		case 32:
+			e.preventDefault();
+	    	document.getElementById("vol").focus();
+			document.getElementById("vol").blur();
+			playVid();
+			break;
+		case 38:
+			e.preventDefault();
+			changeSpeed(.1);
+			break;
+		case 40:
+			e.preventDefault();
+			changeSpeed(-.1);
+			break;
+		case 37:
+			e.preventDefault();
+			changeTime(-5);
+			break;
+		case 39:
+			e.preventDefault();
+			changeTime(5);
+			break;
+		case 77:
+			flipVid();
+			break;
+		default:
+			// code
+	}
 });
