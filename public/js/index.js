@@ -113,3 +113,8 @@ window.addEventListener('keydown', function(e) {
 			// code
 	}
 });
+
+function enableBtn(){
+	var button = document.getElementById("subBtn");
+	button.disabled = false;
+}
