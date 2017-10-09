@@ -16,6 +16,17 @@ app.get("/", function(req, res){
    res.redirect('/vids');   
 });
 
+app.get("/pineapplepizza", function(req, res){
+      var dir = __dirname + "/public/assets";
+   var results = [];
+   
+   fs.readdirSync(dir).forEach(function(file){
+      
+      results.push(file);
+   });
+   res.render('mod', { names: results});
+});
+
 app.get("/vids", function(req, res){
    var dir = __dirname + "/public/assets";
    var results = [];

@@ -1,0 +1,35 @@
+<% include partials/header %>
+
+
+<div class="container">
+  <div class="jumbotron">
+    <h2>Choose Yo Dance</h2>
+  </div>
+  
+	<form action="/fileupload" method="POST" enctype="multipart/form-data">
+	  <div class="form-group" style="text-align: left;">
+  		<input type="file" name="filetoupload" onchange="enableBtn()"/>
+  		<input id="subBtn" type="submit" value="Upload" disabled />
+		</div>
+	</form>
+	
+  <div class="row" style="display:flex; flex-wrap: wrap;">
+      <% names.forEach(function(name){ %>
+        <div class="col-md-4">
+          <div class="thumbnail">
+            <a href="/vids/<%= name %>">
+              <img id="lost" src="lost.png" alt="blah">
+              <div class="caption">
+                <p><%= name %></p>
+                <form action="/vids/<%= name %>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+              </div>
+            </a>
+          </div>
+        </div>
+      <% }); %>
+  </div>
+</div>
+<script src="js/index.js"></script>
+<% include partials/footer %>
