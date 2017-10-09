@@ -4,14 +4,16 @@ var bodyParser = require("body-parser");
 var formidable = require("formidable");
 var fs = require("fs");
 var path = require("path");
+var methodOve = require("method-override");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
+app.use(methodOve("_method"));
 
 
 app.get("/", function(req, res){
-   res.render('working');   
+   res.redirect('/vids');   
 });
 
 app.get("/vids", function(req, res){
@@ -26,7 +28,6 @@ app.get("/vids", function(req, res){
 });
 
 app.get("/vids/:id", function(req, res){
-   console.log(req.params.id);
    res.render('show', {name: req.params.id});
 });
 
@@ -39,12 +40,17 @@ app.post("/fileupload", function(req, res){
       if(err) throw err;
       fs.rename(file.filetoupload.path, path.join(form.uploadDir, file.filetoupload.name), function(err){
          if(err) throw err;
-         res.render('upload', {name: file.filetoupload.name});
+         res.redirect('/vids');
          res.end();
       });
    });
 });
 
+app.delete('/vids/:id', function(req, res){
+   var delPath = path.join(__dirname, '/public/assets/');
+   fs.unlinkSync(delPath + req.params.id);
+   res.redirect('/vids');
+});
 app.listen(process.env.PORT, process.env.IP, function(){
    console.log("Server is running..."); 
 });
