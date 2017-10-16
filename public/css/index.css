@@ -9,3 +9,8 @@
     transform: scale(-1, 1); 
     filter: FlipH;
 }
+
+.mirrorBtn {
+    background-color: rgb(103, 9, 9);
+    color: white !Important;
+}

@@ -3,12 +3,18 @@ var video = document.getElementById("vidd");
 var speedSpan = document.getElementById("speed");
 speedSpan.innerHTML = video.playbackRate.toPrecision(3);
 
+var loop = false;
+
 video.addEventListener('durationchange', function(){
 	document.getElementById("totalTime").innerHTML = timeFormat(video.duration);
+	document.getElementById("endSection").value = timeFormat(video.duration);
 });
 
 video.ontimeupdate = function() {
 	document.getElementById("currTime").innerHTML = timeFormat(video.currentTime);
+	if(loop){
+		section();
+	}
 }
 
 function timeFormat(seconds){
@@ -43,6 +49,7 @@ function playVid() {
 
 function flipVid() {
 	video.classList.toggle('mirrored');
+	document.getElementById('mirrorBtn').classList.toggle('mirrorBtn');
 }
 
 function changeSpeed(rate){
@@ -60,10 +67,29 @@ function volChange(){
 	video.volume = curVol;
 }
 
+var start = document.getElementById("startSection");
+var end = document.getElementById("endSection");
+	
 function section(){
-	var chorus = document.getElementById("startSection");
-	video.currentTime = toSeconds(chorus);
+	if(video.currentTime >= toSeconds(end)){
+		video.currentTime = toSeconds(start);
+	}
+}
+
+function loopBtn(){
+	document.getElementById("loopBtn").classList.toggle('mirrorBtn');
+	video.currentTime = toSeconds(start);
 	playVid();
+	if(loop){
+		loop = false;
+		start.disabled = false;
+		end.disabled = false;
+	} else {
+		loop = true;
+		start.disabled = true;
+		end.disabled = true;
+	}
+	console.log(loop);
 }
 
 function toSeconds(time) {
