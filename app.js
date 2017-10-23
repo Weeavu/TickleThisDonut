@@ -5,6 +5,8 @@ var formidable = require("formidable");
 var fs = require("fs");
 var path = require("path");
 var methodOve = require("method-override");
+var youtubeDl = require("youtube-dl");
+
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
@@ -59,8 +61,29 @@ app.post("/fileupload", function(req, res){
 app.delete('/vids/:id', function(req, res){
    var delPath = path.join(__dirname, '/public/assets/videos/');
    fs.unlinkSync(delPath + req.params.id);
-   res.redirect('/vids');
+   res.redirect('/pineapplepizza');
 });
+
+app.get('/youtube', function(req, res){
+   res.render('youtube');   
+});
+
+app.post('/ytdownload', function(req, res){
+   var video = youtubeDl(req.body.link,
+   ['--format=18']);
+
+   
+   video.on('info', function(info){
+         video.pipe(fs.createWriteStream(__dirname + "/public/assets/videos/" + info._filename));
+         res.redirect('/vids/' + info._filename);
+   });
+   
+
+   
+   
+})
+
 app.listen(process.env.PORT, process.env.IP, function(){
    console.log("Server is running..."); 
 });
+

@@ -1,0 +1,14 @@
+<% include partials/header %>
+
+    <div class="container">
+        <form class="form-inline" action="/ytdownload" method="POST">
+            <div class="form-group">
+                <label for="link">Link:</label>
+                <input type="text" class="form-control" id="link" name="link">
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Download</button>
+        </form>
+    </div>
+
+<% include partials/footer %>
