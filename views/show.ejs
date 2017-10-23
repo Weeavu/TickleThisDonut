@@ -4,7 +4,7 @@
 	<div class="container">
 		<h1>Tickle This Donut</h1>
 		<video id="vidd" width="360" playsinline>
-			<source src="../assets/<%= name %>" type="video/mp4">
+			<source src="../assets/videos/<%= name %>" type="video/mp4">
 		</video>
 		
 		<br>
@@ -13,8 +13,6 @@
 		<button class="btn" onclick="changeSpeed(.1)"><i class="fa fa-plus"></i></button>
 		<button class="btn" onclick="changeSpeed(-.1)"><i class="fa fa-minus"></i></button>
 		<button id="mirrorBtn" class="btn" onclick="flipVid()">Mirror</button>
-		Volume:
-		<input id="vol" type="number" name="volume" min="0" max="1" step=".1" value="1" onchange="volChange()">
 
 		Width:
 		<select id="res" onchange="changeWidth()">
@@ -22,7 +20,10 @@
 			<option value="720">720</option>
 			<option value="1080">1080</option>
 		</select>
-
+		
+		<i class="fa fa-volume-up" aria-hidden="true"></i>
+		<input id="vol" type="number" name="volume" min="0" max="100" step="1" value="100" onchange="volChange(this.value/100)">
+		
 		<p>Speed: <span id="speed"></span></p>
 		<p>Time: <span id="currTime">00:00</span> / <span id="totalTime"></span></p>
 	</div>

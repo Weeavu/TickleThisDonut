@@ -11,31 +11,30 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(methodOve("_method"));
 
+function getVids(){
+   var dir = __dirname + "/public/assets/videos";
+   var results = [];
+   
+   fs.readdirSync(dir).forEach(function(file){
+      
+      results.push(file);
+   });
+   
+   return results;
+}
 
 app.get("/", function(req, res){
    res.redirect('/vids');   
 });
 
 app.get("/pineapplepizza", function(req, res){
-      var dir = __dirname + "/public/assets";
-   var results = [];
-   
-   fs.readdirSync(dir).forEach(function(file){
-      
-      results.push(file);
-   });
-   res.render('mod', { names: results});
+
+   res.render('mod', { names: getVids()});
 });
 
 app.get("/vids", function(req, res){
-   var dir = __dirname + "/public/assets";
-   var results = [];
-   
-   fs.readdirSync(dir).forEach(function(file){
-      
-      results.push(file);
-   });
-   res.render('index', { names: results});
+
+   res.render('index', { names: getVids()});
 });
 
 app.get("/vids/:id", function(req, res){
@@ -45,7 +44,7 @@ app.get("/vids/:id", function(req, res){
 app.post("/fileupload", function(req, res){
    var form = new formidable.IncomingForm();
    
-   form.uploadDir = path.join(__dirname, '/public/assets');
+   form.uploadDir = path.join(__dirname, '/public/assets/videos');
    
    form.parse(req, function(err, fields, file){
       if(err) throw err;
@@ -58,7 +57,7 @@ app.post("/fileupload", function(req, res){
 });
 
 app.delete('/vids/:id', function(req, res){
-   var delPath = path.join(__dirname, '/public/assets/');
+   var delPath = path.join(__dirname, '/public/assets/videos/');
    fs.unlinkSync(delPath + req.params.id);
    res.redirect('/vids');
 });

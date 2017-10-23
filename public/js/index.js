@@ -61,10 +61,8 @@ function changeSpeed(rate){
 	}
 }
 
-function volChange(){
-	var curVol = document.getElementById("vol").value;
-
-	video.volume = curVol;
+function volChange(vol){
+	video.volume = vol;
 }
 
 var start = document.getElementById("startSection");
@@ -126,14 +124,18 @@ window.addEventListener('keydown', function(e) {
 			break;
 		case 37:
 			e.preventDefault();
-			changeTime(-5);
+			changeTime(-2);
 			break;
 		case 39:
 			e.preventDefault();
-			changeTime(5);
+			changeTime(2);
 			break;
 		case 77:
 			flipVid();
+			break;
+		case 76:
+			e.preventDefault();
+			loopBtn();
 			break;
 		default:
 			// code
